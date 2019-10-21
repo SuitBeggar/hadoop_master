@@ -1,0 +1,10 @@
+wordcount\WordCountMain.class
+file\FileMain.class
+wordcount\WordCountMapper.class
+util\HdfsOperation.class
+file\FileMapper.class
+join\JoinReduce.class
+file\FileReducer.class
+join\JoinMapper.class
+join\JoinMain.class
+wordcount\WordCountReducer.class
