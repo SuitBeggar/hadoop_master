@@ -28,6 +28,7 @@ public class DecisionTree {
 
     /**
      * 获取指定数据集中的类别及其计数
+     * （数据集分类统计，例如分为两类，一类 yes 数量为5；一类为no 数量为9）
      *
      * @param datas
      *            指定的数据集
@@ -40,6 +41,7 @@ public class DecisionTree {
         ArrayList<String> tuple = null;
         for (int i = 0; i < datas.size(); i++) {
             tuple = datas.get(i);
+            //获取最后一个属性，也就是分类
             c = tuple.get(tuple.size() - 1);
             if (classes.containsKey(c)) {
                 classes.put(c, classes.get(c) + 1);
@@ -103,10 +105,12 @@ public class DecisionTree {
 
         System.out.println("存放分类类型的个数是" + classes.size());
         System.out.println("剩余特征数为" + attrList.size());
+
+        //如果分类类型长度为1了，说明无法再分类也就是当前就是叶子节点
         if (classes.size() == 1 || attrList.size() == 1) {
             node.setName(maxC);
 
-
+            System.out.println("=====当前已到叶子节点=====");
             return node;
         }
 
@@ -135,7 +139,7 @@ public class DecisionTree {
 
 
             System.out.println("剩余分类特征为" + attrList);// #
-            System.out.println();
+            System.out.println("=================================");
             if (allDatas.get(i).size() == 0 || attrList.size() == 0) {
                 TreeNode leafNode = new TreeNode();
                 leafNode.setName(maxC);

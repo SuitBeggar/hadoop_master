@@ -1,8 +1,6 @@
 package id3;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
@@ -20,17 +18,25 @@ public class TestDecisionTree {
      * @return 候选属性集合
      * @throws IOException
      */
-    public ArrayList<String> readCandAttr() throws IOException{
-        ArrayList<String> candAttr = new ArrayList<String>();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String str = "";
-        while (!(str = reader.readLine()).equals("")) {
-            StringTokenizer tokenizer = new StringTokenizer(str);
-            while (tokenizer.hasMoreTokens()) {
-                candAttr.add(tokenizer.nextToken());
+    public ArrayList<String> readCandAttr() throws Exception{
+        try {
+            ArrayList<String> candAttr = new ArrayList<String>();
+            //BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("F:\\springcloud\\hadoop_master\\src\\main\\java\\id3\\lable.txt"))));
+
+            String str = "";
+
+            while ((str = reader.readLine()) != null) {
+                String[] tempStr = str.split(" ");
+                for (int i = 0; i <tempStr.length ; i++) {
+                    candAttr.add(tempStr[i]);
+                }
             }
+            return candAttr;
+        }catch (Exception e){
+                e.printStackTrace();
         }
-        return candAttr;
+    return  null;
     }
 
     /**
@@ -38,19 +44,28 @@ public class TestDecisionTree {
      * @return 训练元组集合
      * @throws IOException
      */
-    public ArrayList<ArrayList<String>> readData() throws IOException {
-        ArrayList<ArrayList<String>> datas = new ArrayList<ArrayList<String>>();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String str = "";
-        while (!(str = reader.readLine()).equals("")) {
-            StringTokenizer tokenizer = new StringTokenizer(str);
-            ArrayList<String> s = new ArrayList<String>();
-            while (tokenizer.hasMoreTokens()) {
-                s.add(tokenizer.nextToken());
+    public ArrayList<ArrayList<String>> readData() {
+        try {
+            ArrayList<ArrayList<String>> datas = new ArrayList<ArrayList<String>>();
+            //BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("F:\\springcloud\\hadoop_master\\src\\main\\java\\id3\\data.txt"))));
+
+            String str = "";
+            while ((str = reader.readLine()) != null) {
+
+                String[] tempStr = str.split(" ");
+                ArrayList<String> s = new ArrayList<String>();
+                for (int i = 0; i <tempStr.length ; i++) {
+                    s.add(tempStr[i]);
+                }
+
+                datas.add(s);
             }
-            datas.add(s);
+            return datas;
+        } catch (Exception e) {
+        		e.printStackTrace();
         }
-        return datas;
+        return  null;
     }
 
     /**
@@ -88,11 +103,9 @@ public class TestDecisionTree {
         ArrayList<String> candAttr = null;
         ArrayList<ArrayList<String>> datas = null;
         try {
-            System.out.println("请输入候选属性");
             candAttr = tdt.readCandAttr();
-            System.out.println("请输入训练数据");
             datas = tdt.readData();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         DecisionTree tree = new DecisionTree();
