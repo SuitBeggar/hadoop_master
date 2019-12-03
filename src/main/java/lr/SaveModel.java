@@ -19,10 +19,12 @@ public class SaveModel {
         //计算模型矩阵的元素个数
         int n = W.length;
         StringBuffer sb = new StringBuffer();
+        sb.append("w:"); //w
         for (int i = 0; i < n-1; i ++) {
             sb.append(String.valueOf(W[i]));
             sb.append("\t");
         }
+        sb.append("b:"); //b
         sb.append(String.valueOf(W[n-1]));
         String sb1 = sb.toString();
         writer.write(sb1);
@@ -30,8 +32,8 @@ public class SaveModel {
         fip.close();
     }
 
-    public static void saveresults(String filename, String [] pre_results) throws IOException {
-    //public static void saveresults(String filename, double [] pre_results) throws IOException {
+    //public static void saveresults(String filename, String [] pre_results) throws IOException {
+    public static void saveresults(String filename, double [] pre_results) throws IOException {
         File f = new File(filename);
         // 构建FileOutputStream对象
         FileOutputStream fip = new FileOutputStream(f);
